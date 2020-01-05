@@ -1,5 +1,3 @@
-export default () => (
-    <h1>
-        Hello World!
-    </h1>
-)
+export default ({ name }: { name: string}) => (
+        <h1> Hello, { name } </h1>
+    )

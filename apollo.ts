@@ -1,36 +1,50 @@
-import { ApolloProvider } from '@apollo/react-hooks'
-import { ApolloClient } from 'apollo-client'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-import { HttpLink } from 'apollo-link-http'
-import { setContext } from 'apollo-link-context'
-import gql from 'graphql-tag'
+
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink, createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import gql from 'graphql-tag';
+import withApollo from 'next-with-apollo';
 
 const getMyToken = gql`
-{
-    myToken @client
+	{
+		myToken @client
+	}
+`;
+
+const httpLink = createHttpLink({
+	uri: 'http://localhost:4000/graphql'
+});
+
+
+const data = {
+    myToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTA3YzA5YmFmZTg3NjM4NTBhZDdlNjgiLCJpYXQiOjE1Nzc3NDI3MTd9.Hd1Y64VebxAu45dxt73vBuPEc1N1RR2lglVVPTYIs-k"
 }
-`
-const cache = new InMemoryCache()
-const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql'
-})
-const authLink = setContext( async (_, { headers }) => {
-    const data: any = await cache.readQuery({
-        query: getMyToken
-    })
-    const { token } = data
 
-    return {
-        headers: {
-            ...headers,
-            authorization: token ? `${token}` : ""
-        
-        }
+export default withApollo(
+    ({ initialState }) => {
+        const cache = new InMemoryCache().restore(initialState || {})
+        cache.writeData({
+            data
+        })
+        const authLink = setContext(async (_, { headers }) => {
+            const store: any = await cache.readQuery({
+                query: getMyToken
+            });
+            const { myToken } = store
+            return {
+                headers: {
+                    ...headers,
+                    authorization: myToken ? `${myToken}` : ""
+                }
+            };
+        })
+        const link = authLink.concat(httpLink);
+        return new ApolloClient({
+            cache,
+			link
+		})
     }
-})
-
-const link = authLink.concat(httpLink)
-const client = new ApolloClient({
-    cache,
-    link
-  })
+    
+		
+);

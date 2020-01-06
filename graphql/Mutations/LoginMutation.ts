@@ -14,7 +14,7 @@ const loginMutation = gql`
 
 export default () => {
 	const client = useApolloClient();
-	const [mutate, { data }] = useMutation(loginMutation);
+	const [mutate] = useMutation(loginMutation);
 
 	return async (email, password) => {
 		const response = await mutate({

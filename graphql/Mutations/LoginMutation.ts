@@ -1,7 +1,7 @@
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-const loginMutation = gql`
+export const loginMutation = gql`
 	mutation LoginMutation($credentials: LoginInput!) {
 		login(credentials: $credentials) {
 			token
@@ -16,7 +16,7 @@ export default () => {
 	const client = useApolloClient();
 	const [mutate] = useMutation(loginMutation);
 
-	return async (email, password) => {
+	return async (email: string, password: string): Promise<void> => {
 		const response = await mutate({
 			variables: { credentials: { email, password } }
 		});

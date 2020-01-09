@@ -20,7 +20,7 @@ export default () => {
 		const response = await mutate({
 			variables: { credentials: { email, password } }
 		});
-
+		console.log(response)
 		const { token } = response.data.login;
 		return client.writeData({
 			data: {

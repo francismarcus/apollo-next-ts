@@ -21,7 +21,7 @@ export default () => {
 			}}
 			validationSchema={schema}
 			onSubmit={async ({ email, password }: FieldProps) => {
-				login(email, password);
+				await login(email, password);
 			}}
 		>
 			{({ submitForm }) => (

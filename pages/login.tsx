@@ -9,7 +9,7 @@ export default () => (
 			{({ me, loading }) => {
 				if (loading) return <Loading />;
 				console.log(me);
-				return <h1>{me.name}</h1>;
+				return <h1> {me ? me.name : 'Hello, World' } </h1>;
 			}}
 		</MeQuery>
 	</>

@@ -1,18 +1,16 @@
-import FormInput from 'components/FormInput';
 import { Form, Field, Formik } from 'formik';
+import FormInput from 'components/FormInput';
 import Button from 'components/Button';
 import Br from 'components/Br';
 import { Text } from './style';
 import { schema } from './schema';
-import { useLoginMutation } from 'graphql/Mutations';
+import { loginMutation, saveToken } from 'graphql/Mutations/LoginMutation'
+import { useMutation, useApolloClient } from '@apollo/react-hooks'
+import { NextComponentType } from 'next';
 
-interface FieldProps {
-	email: string;
-	password: string;
-}
+const Login: React.FC = () => {
+	const [mutate, { error, client }] = useMutation(loginMutation);
 
-export default () => {
-	const login = useLoginMutation();
 	return (
 		<Formik
 			initialValues={{
@@ -21,7 +19,15 @@ export default () => {
 			}}
 			validationSchema={schema}
 			onSubmit={async ({ email, password }: FieldProps) => {
-				await login(email, password);
+				const response = await mutate(({
+					variables: { credentials: { email, password } }
+				}))
+				
+				const { token } = response.data.login
+				if(token && client) {
+				saveToken(token, client)
+				console.log('push to dashboard')
+				}
 			}}
 		>
 			{({ submitForm }) => (
@@ -36,6 +42,7 @@ export default () => {
 					/>
 
 					<Button onClick={submitForm}>Login</Button>
+					{error && <Text> {error.graphQLErrors[0].message} </Text>}
 					<Br />
 					<Text onClick={() => console.log('Route to register page')}>Register</Text>
 				</Form>
@@ -43,3 +50,10 @@ export default () => {
 		</Formik>
 	);
 };
+// LoginForm submitForm error
+interface FieldProps {
+	email: string;
+	password: string;
+}
+
+export default Login as NextComponentType

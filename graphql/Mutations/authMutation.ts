@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import ApolloClient from 'apollo-client';
 
 export const signupMutation = gql`
-	mutation SignupMutation($email: string, $password: string, $name: string) {
+	mutation Signup($email: String!, $password: String!, $name: String!) {
 		signup(email: $email, password: $password, name: $name) {
 			token
 			user {
@@ -13,7 +13,7 @@ export const signupMutation = gql`
 `;
 
 export const loginMutation = gql`
-	mutation LoginMutation($credentials: LoginInput!) {
+	mutation Login($credentials: LoginInput!) {
 		login(credentials: $credentials) {
 			token
 			user {

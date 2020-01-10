@@ -1,9 +1,10 @@
 import { Formik } from 'formik';
-import SignupForm from './SignupForm'
+import SignupForm from './SignupForm';
 import { schema } from './schema';
-import { signupMutation, saveToken } from 'graphql/Mutations/authMutation'
-import { useMutation } from '@apollo/react-hooks'
+import { signupMutation, saveToken } from 'graphql/Mutations/authMutation';
+import { useMutation } from '@apollo/react-hooks';
 import { NextComponentType } from 'next';
+
 
 const Signup: React.FC = () => {
 	const [signup, { error, client }] = useMutation(signupMutation);
@@ -19,29 +20,24 @@ const Signup: React.FC = () => {
 			onSubmit={async ({ username, email, password }: FieldProps) => {
 				const response = await signup({
 					variables: { username, email, password }
-				})
+				});
 
-				const { token } = response.data.signup
+				const { token } = response.data.signup;
 				if (token && client) {
-					saveToken(token, client)
-					console.log('push to dashboard')
+					saveToken(token, client);
+					console.log('push to dashboard');
 				}
 			}}
 		>
-			{({ submitForm }) => (
-				<SignupForm
-					submitForm={submitForm}
-					error={error} />
-			)}
+			{({ submitForm }) => <SignupForm submitForm={submitForm} error={error} />}
 		</Formik>
 	);
 };
 
 interface FieldProps {
-	username: string
+	username: string;
 	email: string;
 	password: string;
 }
 
-export default Signup as NextComponentType
-
+export default Signup

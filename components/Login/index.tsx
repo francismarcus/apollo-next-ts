@@ -1,12 +1,15 @@
 import { Formik } from 'formik';
-import LoginForm from './LoginForm'
+import LoginForm from './LoginForm';
 import { schema } from './schema';
-import { loginMutation, saveToken } from 'graphql/Mutations/authMutation'
-import { useMutation } from '@apollo/react-hooks'
+import { loginMutation, saveToken } from 'graphql/Mutations/authMutation';
+import { useMutation } from '@apollo/react-hooks';
 import { NextComponentType } from 'next';
+import { useLoginMutation } from 'graphql/generated';
+
+
 
 const Login: React.FC = () => {
-	const [login, { error, client }] = useMutation(loginMutation);
+	const [login, { error, client }] = useLoginMutation();
 
 	return (
 		<Formik
@@ -18,20 +21,17 @@ const Login: React.FC = () => {
 			onSubmit={async ({ email, password }: FieldProps) => {
 				const response = await login({
 					variables: { credentials: { email, password } }
-				})
+				});
 
-				const { token } = response.data.login
+				const { token } = response.data!.login;
 				if (token && client) {
-					saveToken(token, client)
-					console.log('push to dashboard')
+					saveToken(token, client);
+					console.log('push to dashboard');
+					console.log(response);
 				}
 			}}
 		>
-			{({ submitForm }) => (
-				<LoginForm
-					submitForm={submitForm}
-					error={error} />
-			)}
+			{({ submitForm }) => <LoginForm submitForm={submitForm} error={error} />}
 		</Formik>
 	);
 };
@@ -41,5 +41,4 @@ interface FieldProps {
 	password: string;
 }
 
-export default Login as NextComponentType
-
+export default Login;

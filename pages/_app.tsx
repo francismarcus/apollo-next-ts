@@ -2,9 +2,23 @@ import React from 'react'
 import App from 'next/app'
 import { ApolloProvider } from '@apollo/react-hooks'
 import withApollo from '../apollo'
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+const GlobalStyles = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=Montserrat);
+  body {
+    font-family: 'Montserrat', sans-serif;
+  }
+`
 
 interface Props {
     apollo: any
+}
+
+const theme = {
+    color: {
+        main: '#ff5a5f;',
+        secondary: '#5AFFFA;'
+    }
 }
 
 class MyApp extends App<Props> {
@@ -12,7 +26,10 @@ class MyApp extends App<Props> {
         const { Component, pageProps, apollo } = this.props
         return (
             <ApolloProvider client={apollo}>
-                <Component {...pageProps} />
+                <ThemeProvider theme={theme}>
+                    <GlobalStyles />
+                    <Component {...pageProps} />
+                </ThemeProvider>
             </ApolloProvider>
         )
     }

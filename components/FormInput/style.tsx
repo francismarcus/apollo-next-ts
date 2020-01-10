@@ -4,12 +4,14 @@ interface InputProps {
     error?: boolean
 }
 
+
+
 const Container = styled.div`
 	width: 100%;
 	margin: 0 0 30px 0;
 	display: flex;
-	flex-direction: column;
-	position: relative;
+    flex-direction: column;
+    align-self: center;
 `;
 
 const Label = styled.label`
@@ -27,9 +29,9 @@ const Input = styled.input<InputProps>`
     border-radius: 4px;
     border: 1px solid;
     border-color: rgb(235, 235, 235);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
-    font-family: Montserrat;
+    font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
     ${props =>
         props.error &&
@@ -43,7 +45,7 @@ const Input = styled.input<InputProps>`
     }
 `
 const ErrorMessage = styled.p`
-    position: absolute;
+
     top: 77px;
     left: 5px;
     color: red;

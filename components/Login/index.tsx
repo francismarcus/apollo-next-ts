@@ -1,12 +1,12 @@
 import { Formik } from 'formik';
 import LoginForm from './LoginForm'
 import { schema } from './schema';
-import { loginMutation, saveToken } from 'graphql/Mutations/LoginMutation'
+import { loginMutation, saveToken } from 'graphql/Mutations/authMutation'
 import { useMutation } from '@apollo/react-hooks'
 import { NextComponentType } from 'next';
 
 const Login: React.FC = () => {
-	const [mutate, { error, client }] = useMutation(loginMutation);
+	const [login, { error, client }] = useMutation(loginMutation);
 
 	return (
 		<Formik
@@ -16,9 +16,9 @@ const Login: React.FC = () => {
 			}}
 			validationSchema={schema}
 			onSubmit={async ({ email, password }: FieldProps) => {
-				const response = await mutate(({
+				const response = await login({
 					variables: { credentials: { email, password } }
-				}))
+				})
 
 				const { token } = response.data.login
 				if (token && client) {
@@ -35,7 +35,7 @@ const Login: React.FC = () => {
 		</Formik>
 	);
 };
-// LoginForm submitForm error
+
 interface FieldProps {
 	email: string;
 	password: string;

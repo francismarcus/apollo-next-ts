@@ -10,21 +10,21 @@ const LoginForm: React.FC<Props> = ({
     submitForm,
     error
 }) => (
-        <Form>
-            <Field name="email" placeholder="Email" label="Email" component={FormInput} />
-            <Field
-                name="password"
-                placeholder="Password"
-                label="Password"
-                type="password"
-                component={FormInput}
-            />
+            <Form>
+                <Field name="email" placeholder="Email" label="Email" component={FormInput} />
+                <Field
+                    name="password"
+                    placeholder="Password"
+                    label="Password"
+                    type="password"
+                    component={FormInput}
+                />
 
-            <Button onClick={submitForm}>Login</Button>
-            {error && <Text> {error.graphQLErrors[0].message} </Text>}
-            <Br />
-            <Text onClick={() => console.log('Route to register page')}>Register</Text>
-        </Form>
+                <Button onClick={submitForm}>Login</Button>
+                {error && <Text> {error.graphQLErrors[0].message} </Text>}
+                <Br />
+                <Text onClick={() => console.log('Route to register page')}>Register</Text>
+            </Form>
     )
 
 interface Props {

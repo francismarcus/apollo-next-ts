@@ -3,7 +3,14 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink, createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import withApollo from 'next-with-apollo';
-import { getMyToken } from 'graphql/queries'
+import gql from 'graphql-tag'
+
+const getMyToken = gql`
+	query myToken {
+		myToken @client
+	}
+`;
+
 
 const httpLink = createHttpLink({
 	uri: 'http://localhost:4000/graphql'

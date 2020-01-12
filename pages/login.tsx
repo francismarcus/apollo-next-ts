@@ -1,22 +1,16 @@
-import { NextPage } from 'next';
-import MeQuery from 'graphql/Query/meQuery';
 import styled from 'styled-components';
-import { useState } from 'react'
-
 import Login from 'components/Login';
-import Signup from 'components/Signup'
+import Link from 'next/Link';
 
 export default () => {
 	return (
 		<Container>
 			<Wrapper>
 				<Login />
-				<Signup />
 			</Wrapper>
 		</Container>
 	);
 };
-const Loading = () => <div></div>;
 
 export const Wrapper = styled.div`
 	width: 550px;
@@ -31,4 +25,17 @@ export const Container = styled.div`
 	justify-content: center;
 	align-items: center;
 	font-family: 'Montserrat', sans-serif;
+`;
+
+export const Text = styled.p`
+	width: 100px;
+	margin: 20px auto 0 auto;
+	font-size: 16px;
+	font-weight: 600;
+	text-align: center;
+	color: #ffa85a;
+	cursor: pointer;
+	&:hover {
+		text-decoration: underline;
+	}
 `;

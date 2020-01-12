@@ -20,8 +20,8 @@ module.exports = {
               "skipTypename": false,
               "withHooks": true,
               "withHOC": false,
-              "withComponent": false
-            }
+              "withComponent": true
+            } 
         },
         "./graphql.schema.json": {
           "plugins": [

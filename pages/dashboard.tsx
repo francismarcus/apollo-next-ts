@@ -1,12 +1,14 @@
 import { NextPage, NextPageContext, NextComponentType } from 'next';
-import Hello from 'components/Hello';
-import MeQuery from 'graphql/Query/meQuery';
 import Router from 'next/router';
+import dynamic from 'next/dynamic';
 import { getMyToken } from 'apollo';
 import { withApolloContext } from 'interfaces';
-import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import Loading from 'components/Loading';
+import Hello from 'components/Hello';
+
+const LoginPage = dynamic(() => import('./login'));
+const MeQuery = dynamic(() => import('graphql/Query/meQuery'));
 
 const Page: NextComponentType<withApolloContext, {}, withProps> = ({ token }) => {
 	useEffect(() => {
@@ -20,7 +22,6 @@ const Page: NextComponentType<withApolloContext, {}, withProps> = ({ token }) =>
 		Router.replace('/dashboard', '/login', { shallow: true });
 	}, [token]);
 
-	const LoginPage = dynamic(() => import('./login'));
 	if (!token) return <LoginPage />;
 
 	return (

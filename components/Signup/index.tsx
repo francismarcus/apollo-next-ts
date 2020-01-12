@@ -1,31 +1,31 @@
 import { Formik } from 'formik';
 import SignupForm from './SignupForm';
 import { schema } from './schema';
-import { signupMutation, saveToken } from 'graphql/Mutations/authMutation';
-import { useMutation } from '@apollo/react-hooks';
-import { NextComponentType } from 'next';
-
+import { saveToken } from 'graphql/Mutations/authMutation';
+import { useSignupMutation } from 'graphql/generated'
+import Router from 'next/router'
 
 const Signup: React.FC = () => {
-	const [signup, { error, client }] = useMutation(signupMutation);
+	const [signup, { error, client }] = useSignupMutation()
 
 	return (
 		<Formik
 			initialValues={{
-				username: '',
+				name: '',
 				email: '',
 				password: ''
 			}}
 			validationSchema={schema}
-			onSubmit={async ({ username, email, password }: FieldProps) => {
+			onSubmit={async ({ name, email, password }: FieldProps) => {
+
 				const response = await signup({
-					variables: { username, email, password }
+					variables: { email, password, name }
 				});
 
-				const { token } = response.data.signup;
+				const { token } = response.data!.signup;
 				if (token && client) {
 					saveToken(token, client);
-					console.log('push to dashboard');
+					Router.push('/dashboard')
 				}
 			}}
 		>
@@ -35,7 +35,7 @@ const Signup: React.FC = () => {
 };
 
 interface FieldProps {
-	username: string;
+	name: string;
 	email: string;
 	password: string;
 }

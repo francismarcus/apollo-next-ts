@@ -5,8 +5,7 @@ import { loginMutation, saveToken } from 'graphql/Mutations/authMutation';
 import { useMutation } from '@apollo/react-hooks';
 import { NextComponentType } from 'next';
 import { useLoginMutation } from 'graphql/generated';
-
-
+import Router from 'next/router';
 
 const Login: React.FC = () => {
 	const [login, { error, client }] = useLoginMutation();
@@ -26,8 +25,7 @@ const Login: React.FC = () => {
 				const { token } = response.data!.login;
 				if (token && client) {
 					saveToken(token, client);
-					console.log('push to dashboard');
-					console.log(response);
+					Router.push('/dashboard');
 				}
 			}}
 		>

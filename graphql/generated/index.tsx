@@ -1,7 +1,10 @@
 import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/react-common';
+import * as React from 'react';
+import * as ApolloReactComponents from '@apollo/react-components';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string,
@@ -31,7 +34,7 @@ export type LoginInput = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  signup?: Maybe<AuthPayload>,
+  signup: AuthPayload,
   login: AuthPayload,
   createProgram: Program,
 };
@@ -86,14 +89,14 @@ export type SignupMutationVariables = {
 
 export type SignupMutation = (
   { __typename?: 'Mutation' }
-  & { signup: Maybe<(
+  & { signup: (
     { __typename?: 'AuthPayload' }
     & Pick<AuthPayload, 'token'>
     & { user: (
       { __typename?: 'User' }
       & Pick<User, 'id'>
     ) }
-  )> }
+  ) }
 );
 
 export type LoginMutationVariables = {
@@ -140,6 +143,12 @@ export const SignupDocument = gql`
 }
     `;
 export type SignupMutationFn = ApolloReactCommon.MutationFunction<SignupMutation, SignupMutationVariables>;
+export type SignupComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<SignupMutation, SignupMutationVariables>, 'mutation'>;
+
+    export const SignupComponent = (props: SignupComponentProps) => (
+      <ApolloReactComponents.Mutation<SignupMutation, SignupMutationVariables> mutation={SignupDocument} {...props} />
+    );
+    
 
 /**
  * __useSignupMutation__
@@ -177,6 +186,12 @@ export const LoginDocument = gql`
 }
     `;
 export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
+export type LoginComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<LoginMutation, LoginMutationVariables>, 'mutation'>;
+
+    export const LoginComponent = (props: LoginComponentProps) => (
+      <ApolloReactComponents.Mutation<LoginMutation, LoginMutationVariables> mutation={LoginDocument} {...props} />
+    );
+    
 
 /**
  * __useLoginMutation__
@@ -213,6 +228,12 @@ export const MeDocument = gql`
   }
 }
     `;
+export type MeComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<MeQuery, MeQueryVariables>, 'query'>;
+
+    export const MeComponent = (props: MeComponentProps) => (
+      <ApolloReactComponents.Query<MeQuery, MeQueryVariables> query={MeDocument} {...props} />
+    );
+    
 
 /**
  * __useMeQuery__

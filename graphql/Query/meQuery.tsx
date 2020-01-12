@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import * as React from 'react';
+import { ApolloError } from 'apollo-client';
 
 export const meQuery = gql`
 	query me {
@@ -23,6 +24,7 @@ export interface Me {
 interface WithMe {
 	me: any;
 	loading: boolean;
+	error: ApolloError | undefined
 }
 
 interface Props {
@@ -39,7 +41,7 @@ export default class MeQuery extends React.PureComponent<Props> {
 	public render() {
 		return (
 			<Query<Data> query={meQuery}>
-				{({ data, loading }) => {
+				{({ data, loading, error }) => {
 					let me = null;
 
 					if (data && data.me) {
@@ -48,7 +50,8 @@ export default class MeQuery extends React.PureComponent<Props> {
 
 					return this.props.children({
 						me,
-						loading
+						loading,
+						error
 					});
 				}}
 			</Query>

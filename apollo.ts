@@ -5,7 +5,7 @@ import { setContext } from 'apollo-link-context';
 import withApollo from 'next-with-apollo';
 import gql from 'graphql-tag'
 
-const getMyToken = gql`
+export const getMyToken = gql`
 	query myToken {
 		myToken @client
 	}
@@ -18,9 +18,9 @@ const httpLink = createHttpLink({
 
 const data = {
 	myToken:
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTA3YzA5YmFmZTg3NjM4NTBhZDdlNjgiLCJpYXQiOjE1Nzc3NDI3MTd9.Hd1Y64VebxAu45dxt73vBuPEc1N1RR2lglVVPTYIs-k'
+		''
 };
-
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTA3YzA5YmFmZTg3NjM4NTBhZDdlNjgiLCJpYXQiOjE1Nzc3NDI3MTd9.Hd1Y64VebxAu45dxt73vBuPEc1N1RR2lglVVPTYIs-k
 export default withApollo(({ initialState }) => {
 	const cache = new InMemoryCache().restore(initialState || {});
 	cache.writeData({

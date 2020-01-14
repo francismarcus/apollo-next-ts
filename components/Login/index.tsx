@@ -1,9 +1,7 @@
 import { Formik } from 'formik';
 import LoginForm from './LoginForm';
 import { schema } from './schema';
-import { loginMutation, saveToken } from 'graphql/Mutations/authMutation';
-import { useMutation } from '@apollo/react-hooks';
-import { NextComponentType } from 'next';
+import { saveToken } from 'graphql/Mutations/authMutation';
 import { useLoginMutation } from 'graphql/generated';
 import Router from 'next/router';
 

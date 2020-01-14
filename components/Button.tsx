@@ -22,7 +22,7 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${({ theme }) => theme.color.main}
+    background-color: ${({ theme }) => theme.color};
     border: 2px solid transparent;
     border-radius: 4px;
     font-weight: 600;

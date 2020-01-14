@@ -2,29 +2,31 @@ import styled from 'styled-components';
 import Login from 'components/Login';
 import Link from 'next/Link';
 
-export default () => {
+export default ( {changeTheme }: { changeTheme: () => void }) => {
 	return (
 		<Container>
 			<Wrapper>
 				<Login />
+				<button onClick={() => changeTheme()}> Change theme  </button>
 			</Wrapper>
 		</Container>
 	);
 };
 
-export const Wrapper = styled.div`
-	width: 550px;
-	padding: 25px;
-	box-sizing: border-box;
-`;
-
 export const Container = styled.div`
 	width: 100%;
-	height: calc(100vh - 90px);
+	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-family: 'Montserrat', sans-serif;
+	background-color: ${({ theme }) => theme.bgColor};
+`;
+
+export const Wrapper = styled.div`
+	width: 550px;
+	padding: 25px;
+	box-sizing: border-box;
 `;
 
 export const Text = styled.p`

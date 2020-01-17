@@ -33,6 +33,7 @@ const Input = styled.input<InputProps>`
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
+    background-color: ${props => props.theme.bgColor};
     ${props =>
         props.error &&
         css`

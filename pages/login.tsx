@@ -1,25 +1,30 @@
 import styled from 'styled-components';
 import Login from 'components/Login';
 import Link from 'next/Link';
+import useDarkMode from 'use-dark-mode'
 
-export default ( {changeTheme }: { changeTheme: () => void }) => {
+export default (props: any) => {
+	const { value, enable, disable } = useDarkMode()
+	const dark = value ? disable : enable
 	return (
 		<Container>
+			
 			<Wrapper>
+	
 				<Login />
-				<button onClick={() => changeTheme()}> Change theme  </button>
+				
 			</Wrapper>
 		</Container>
 	);
 };
-
+// 
 export const Container = styled.div`
 	width: 100%;
 	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'Poppins', sans-serif;
 	background-color: ${({ theme }) => theme.bgColor};
 `;
 
@@ -41,3 +46,8 @@ export const Text = styled.p`
 		text-decoration: underline;
 	}
 `;
+
+export const Corner = styled.div`
+	order: -1;
+	text-align: right;
+`

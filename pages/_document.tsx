@@ -39,7 +39,7 @@ export default class MyDocument extends Document {
 					<meta name="theme-color" content={'main'} />
 					<link
 						rel="stylesheet"
-						href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"
+						href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap"
 					/>
 					<style jsx global>
 						{`

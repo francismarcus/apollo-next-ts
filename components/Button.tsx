@@ -37,13 +37,13 @@ export const Container = styled.div`
     cursor: pointer;
     display: inline-block;
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    font-weight: 800;
+    font-size: ${props => props.theme.fz.regular};
+    font-weight: 700;
     letter-spacing: normal;
     line-height: 24px;
     margin: 0;
     min-width: 71.1935px;
-    padding: 10px 22px;
+    padding: 10px ${props => props.theme.spacing.base};
     position: relative;
     text-align: center;
     text-decoration: none;

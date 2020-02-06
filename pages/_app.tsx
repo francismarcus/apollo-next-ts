@@ -5,6 +5,7 @@ import withApollo from '../apollo';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import useDarkMode from 'use-dark-mode'
 import Darkmode from 'components/Darkmode'
+import '../empty.css'
 
 const GlobalStyles = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Alata&display=swap');

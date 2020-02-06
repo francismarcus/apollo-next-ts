@@ -1,23 +1,16 @@
 import styled from 'styled-components';
 import Login from 'components/Login';
-import Link from 'next/Link';
-import useDarkMode from 'use-dark-mode'
 
 export default (props: any) => {
-	const { value, enable, disable } = useDarkMode()
-	const dark = value ? disable : enable
 	return (
 		<Container>
-			
 			<Wrapper>
-	
 				<Login />
-				
 			</Wrapper>
 		</Container>
 	);
 };
-// 
+//
 export const Container = styled.div`
 	width: 100%;
 	height: 100vh;
@@ -50,4 +43,4 @@ export const Text = styled.p`
 export const Corner = styled.div`
 	order: -1;
 	text-align: right;
-`
+`;

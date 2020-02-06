@@ -1,15 +1,38 @@
-import { NextPage, NextPageContext, NextComponentType } from 'next';
+import { NextPage, NextComponentType } from 'next';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import { getMyToken } from 'apollo';
 import { withApolloContext } from 'interfaces';
 import { useEffect } from 'react';
-import Loading from 'components/Loading';
 import Hello from 'components/Hello';
+import { Program } from 'graphql/generated';
+import Nav from 'components/Nav';
+import useCurrentUser from 'hooks/useCurrentUser'
+
+const ProgramsMap: React.FC<Props> = ({ programs }): JSX.Element => {
+	return (
+		<>
+			{programs.map((p: Program) => (
+				<h1> {p.name} </h1>
+			))}
+		</>
+	);
+};
+interface Props {
+	programs: Program[];
+}
+const ProgramList: React.FC<Props> = ({ programs }): JSX.Element => {
+	return (
+		<>
+			{programs[1] && <ProgramsMap programs={programs} />}
+			{!programs[1] && <h1> You have no programs </h1>}
+		</>
+	);
+};
 
 const LoginPage = dynamic(() => import('./login'));
 const MeQuery = dynamic(() => import('graphql/Query/meQuery'));
-
+const Loading = dynamic(() => import('components/Loading'));
 const Page: NextComponentType<withApolloContext, {}, withProps> = ({ token }) => {
 	useEffect(() => {
 		/*
@@ -20,23 +43,31 @@ const Page: NextComponentType<withApolloContext, {}, withProps> = ({ token }) =>
 		*/
 		if (token) return;
 		Router.replace('/dashboard', '/login', { shallow: true });
+
 	}, [token]);
 
 	if (!token) return <LoginPage />;
-
 	return (
 		<>
+			<Nav />
 			<MeQuery>
-				{({ me, loading }) => {
+				{({ me, loading, error }) => {
 					if (loading) return <Loading />;
-					return <Hello name={me.name} />;
+					if (error) console.log(error)
+
+					return (
+						<>
+							<Hello name={me.name} />
+							<ProgramList programs={me.programs} />
+						</>
+					);
 				}}
 			</MeQuery>
 		</>
 	);
 };
 
-Page.getInitialProps = async ({ apolloClient }: withApolloContext) => {
+Page.getInitialProps = async ({ apolloClient, req }: withApolloContext) => {
 	const store: any = await apolloClient.cache.readQuery({
 		query: getMyToken
 	});

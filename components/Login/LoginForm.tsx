@@ -5,19 +5,19 @@ import Br from 'components/Br';
 import { Text, A } from './style';
 import { ApolloError } from 'apollo-client';
 import Link from 'next/Link';
+import Spinner from 'components/Spinner'
 
-const LoginForm: React.FC<Props> = ({ submitForm, error }) => (
+const LoginForm: React.FC<Props> = ({ error, ...props }) => (
 	<Form>
-		<Field name="email" placeholder="Email" label="Email" component={FormInput} />
-		<Field
+		<FormInput name="email" placeholder="Email" label="Email" />
+		<FormInput
 			name="password"
 			placeholder="Password"
 			label="Password"
 			type="password"
-			component={FormInput}
 		/>
 
-		<Button onClick={submitForm}>Login</Button>
+		<Button type="submit">Login</Button>
 		{error && <Text> {error.graphQLErrors[0].message} </Text>}
 		<Br />
         <Link href="/signup"><A> Register instead </A></Link> 
@@ -25,7 +25,6 @@ const LoginForm: React.FC<Props> = ({ submitForm, error }) => (
 );
 
 interface Props {
-	submitForm: () => Promise<any>;
 	error: ApolloError | undefined;
 }
 

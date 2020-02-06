@@ -4,10 +4,28 @@ import { schema } from './schema';
 import { saveToken } from 'graphql/Mutations/authMutation';
 import { useLoginMutation } from 'graphql/generated';
 import Router from 'next/router';
+import { useEffect } from 'react';
+import Spinner from 'components/Spinner'
 
 const Login: React.FC = () => {
-	const [login, { error, client }] = useLoginMutation();
+	const [login, { error, client, loading }] = useLoginMutation();
 
+	useEffect(() => {
+		checkStorage();
+		return () => {
+			<Spinner />
+		};
+	}, []);
+
+	async function checkStorage() {
+		const token = await localStorage.getItem('authToken');
+		if (token) {
+			await saveToken(token, client);
+			return Router.push('/dashboard');
+		}
+	}
+
+	if (loading) return <Spinner />
 	return (
 		<Formik
 			initialValues={{
@@ -23,11 +41,12 @@ const Login: React.FC = () => {
 				const { token } = response.data!.login;
 				if (token && client) {
 					saveToken(token, client);
-					Router.push('/dashboard');
+					await localStorage.setItem('authToken', token);
+					return Router.push('/dashboard');
 				}
 			}}
 		>
-			{({ submitForm }) => <LoginForm submitForm={submitForm} error={error} />}
+			<LoginForm error={error} />
 		</Formik>
 	);
 };

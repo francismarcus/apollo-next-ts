@@ -11,7 +11,6 @@ export const getMyToken = gql`
 	}
 `;
 
-
 const httpLink = createHttpLink({
 	uri: 'http://localhost:4000/graphql'
 });
@@ -20,7 +19,7 @@ const data = {
 	myToken:
 		''
 };
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTA3YzA5YmFmZTg3NjM4NTBhZDdlNjgiLCJpYXQiOjE1Nzc3NDI3MTd9.Hd1Y64VebxAu45dxt73vBuPEc1N1RR2lglVVPTYIs-k
+
 export default withApollo(({ initialState }) => {
 	const cache = new InMemoryCache().restore(initialState || {});
 	cache.writeData({

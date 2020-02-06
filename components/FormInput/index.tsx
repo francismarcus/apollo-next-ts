@@ -1,35 +1,20 @@
 import * as React from 'react';
 import { Container, Label, Input, ErrorMessage } from './style';
-import { FieldProps } from 'formik';
+import { FieldProps, useField } from 'formik';
 
-const FormInput: React.StatelessComponent<Props> = ({
-	field: { name, value, onChange },
-	form: { errors, touched },
-	label,
-	placeholder,
-	type
-}) => {
-	const errorMsg = touched[name] && errors[name];
+const FormInput = ({ label, ...props }: Props) => {
+	const [field, meta] = useField(props);
+	const errorMsg = meta.touched && meta.error;
 	return (
 		<Container>
-			{label && <Label> {label} </Label>}
+			{label && <Label htmlFor={props.id || props.name}> {label} </Label>}
 			<Input
-				name={name}
-				placeholder={placeholder}
-				type={type}
-				value={value}
-				onChange={onChange}
-				error={!!errorMsg}
+				{...field} {...props} 
 			/>
-			{errorMsg && <ErrorMessage> {errorMsg} </ErrorMessage>}
+			{errorMsg && <ErrorMessage> {meta.error} </ErrorMessage>}
 		</Container>
 	);
 };
 
-interface Props extends FieldProps {
-	label: string;
-	type: string;
-	placeholder: string;
-}
-
+type Props = any
 export default FormInput;

@@ -20,8 +20,8 @@ const Label = styled.label`
 	font-size: ${props => props.theme.fz.small};
 	font-weight: 700;
 	letter-spacing: 0.5px;
-	
 `;
+
 const Input = styled.input<InputProps>`
     width: 100%;
     height: 45px;

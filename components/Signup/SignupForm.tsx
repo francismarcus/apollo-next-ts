@@ -6,8 +6,7 @@ import { Text, A } from './style';
 import { ApolloError } from 'apollo-client';
 import Link from 'next/Link';
 
-
-const SignupForm: React.FC<Props<FormValues>> = ({ error, ...props }) => {
+const SignupForm: React.FC<Props> = ({ error, ...props }) => {
 	return (
 		<Form>
 			<FormInput name="email" placeholder="Email" label="Email" />
@@ -25,7 +24,7 @@ const SignupForm: React.FC<Props<FormValues>> = ({ error, ...props }) => {
 };
 export default SignupForm;
 
-interface Props<T> extends FormikProps<T> {
+interface Props {
 	error: ApolloError | undefined;
 }
 
